@@ -56,21 +56,22 @@ class _QuizPageState extends State<QuizPage> {
     setState(() {
       if (quizz.isFinished() == true) {
         Alert(
-            context: context,
-            style: alertStyle,
-            title: "Finished",
-            desc: "You\'ve completed the quizz",
-            buttons: [
-              DialogButton(
-                color: Colors.deepPurple.shade300,
-                child: Text(
-                  "Restart",
-                  style: TextStyle(color: Colors.black, fontSize: 20),
-                ),
-                onPressed: () => Navigator.pop(context),
-                width: 120,
+          context: context,
+          style: alertStyle,
+          title: "Finished",
+          desc: "You\'ve completed the quizz",
+          buttons: [
+            DialogButton(
+              color: Colors.deepPurple.shade300,
+              child: Text(
+                "Restart",
+                style: TextStyle(color: Colors.black, fontSize: 20),
               ),
-            ],).show();
+              onPressed: () => Navigator.pop(context),
+              width: 120,
+            ),
+          ],
+        ).show();
         quizz.restartQuestions();
         answerIcon.clear();
       } else {
