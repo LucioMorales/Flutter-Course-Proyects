@@ -33,4 +33,16 @@ class Quizz{
   bool getAnswer(){
     return _questions[_questionNumber].questionAnswer;
   }
+
+  bool isFinished(){
+    if(_questionNumber >= _questions.length -1){
+      return true;
+    } else{
+      return false;
+    }
+  }
+
+  void restartQuestions(){
+    _questionNumber = 0;
+  }
 }
