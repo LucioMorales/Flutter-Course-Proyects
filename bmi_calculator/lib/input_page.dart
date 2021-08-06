@@ -5,7 +5,14 @@ import 'card_model.dart';
 
 const bottomContainerHeigth = 55.0;
 const bottomContainerColor = Color(0xFFEB1555);
-const cardColor = Color(0xFF1D1E33);
+const inactiveCardColor = Color(0xFF1D1E33);
+const activeCardColor = Color(0xFF111328);
+
+// enum GenderType {
+//   male,
+//   female,
+//   notSelected
+// }
 
 class InputPage extends StatefulWidget {
   @override
@@ -13,6 +20,12 @@ class InputPage extends StatefulWidget {
 }
 
 class _InputPageState extends State<InputPage> {
+
+  //GenderType gender = GenderType.notSelected;
+
+  bool maleActive = false;
+  bool femaleActive = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,15 +39,31 @@ class _InputPageState extends State<InputPage> {
             child: Row(
               children: <Widget>[
                 Expanded(
-                  child: CardModel(
-                    cardColor,
-                    cardChild(FontAwesomeIcons.mars, 'Male'),
+                  child: GestureDetector(
+                    onTap: () {setState(() {
+                      //gender = GenderType.male;
+                      maleActive = true;
+                      femaleActive = false;
+                    });},
+                    child: CardModel(
+                      //gender ==  GenderType.male ? activeCardColor : inactiveCardColor,
+                      maleActive ? activeCardColor : inactiveCardColor,
+                      CardChild(FontAwesomeIcons.mars, 'Male'),
+                    ),
                   ),
                 ),
                 Expanded(
-                  child: CardModel(
-                    cardColor,
-                    cardChild(FontAwesomeIcons.venus, 'Female'),
+                  child: GestureDetector(
+                    onTap: () {setState(() {
+                      //gender = GenderType.female;
+                      maleActive = false;
+                      femaleActive = true;
+                    });},
+                    child: CardModel(
+                      //gender == GenderType.female ? activeCardColor : inactiveCardColor,
+                      femaleActive ? activeCardColor : inactiveCardColor,
+                      CardChild(FontAwesomeIcons.venus, 'Female'),
+                    ),
                   ),
                 ),
               ],
@@ -44,7 +73,7 @@ class _InputPageState extends State<InputPage> {
             child: Row(
               children: <Widget>[
                 Expanded(
-                  child: CardModel(cardColor),
+                  child: CardModel(inactiveCardColor,CardChild(FontAwesomeIcons.venus, ''),),
                 ),
               ],
             ),
@@ -53,10 +82,10 @@ class _InputPageState extends State<InputPage> {
             child: Row(
               children: <Widget>[
                 Expanded(
-                  child: CardModel(cardColor),
+                  child: CardModel(inactiveCardColor,CardChild(FontAwesomeIcons.mars, ''),),
                 ),
                 Expanded(
-                  child: CardModel(cardColor),
+                  child: CardModel(inactiveCardColor,CardChild(FontAwesomeIcons.venus, ''),),
                 ),
               ],
             ),

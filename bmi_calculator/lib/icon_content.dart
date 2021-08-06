@@ -5,8 +5,8 @@ const bottomTextStyle = TextStyle(
   color: Color(0xFF8D8E98),
 );
 
-class cardChild extends StatelessWidget {
-  cardChild(this.icon, this.bottomText);
+class CardChild extends StatelessWidget {
+  CardChild(this.icon, this.bottomText);
 
   final IconData icon;
   final String bottomText;
@@ -19,6 +19,7 @@ class cardChild extends StatelessWidget {
         Icon(
           icon,
           size: 80.0,
+          color: Color(0xFFFFFFFF),
         ),
         SizedBox(
           height: 15,
