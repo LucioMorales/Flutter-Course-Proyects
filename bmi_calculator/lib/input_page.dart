@@ -2,11 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'icon_content.dart';
 import 'card_model.dart';
-
-const bottomContainerHeigth = 55.0;
-const bottomContainerColor = Color(0xFFEB1555);
-const inactiveCardColor = Color(0xFF1D1E33);
-const activeCardColor = Color(0xFF111328);
+import 'constants.dart';
 
 // enum GenderType {
 //   male,
@@ -20,11 +16,10 @@ class InputPage extends StatefulWidget {
 }
 
 class _InputPageState extends State<InputPage> {
-
   //GenderType gender = GenderType.notSelected;
-
   bool maleActive = false;
   bool femaleActive = false;
+  int height = 100;
 
   @override
   Widget build(BuildContext context) {
@@ -34,67 +29,103 @@ class _InputPageState extends State<InputPage> {
         centerTitle: true,
       ),
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           Expanded(
             child: Row(
               children: <Widget>[
                 Expanded(
-                  child: GestureDetector(
-                    onTap: () {setState(() {
-                      //gender = GenderType.male;
-                      maleActive = true;
-                      femaleActive = false;
-                    });},
-                    child: CardModel(
-                      //gender ==  GenderType.male ? activeCardColor : inactiveCardColor,
-                      maleActive ? activeCardColor : inactiveCardColor,
-                      CardChild(FontAwesomeIcons.mars, 'Male'),
-                    ),
+                  child: CardModel(
+                    //gender ==  GenderType.male ? activeCardColor : inactiveCardColor,
+                    colorin: maleActive ? kActiveCardColor : kInactiveCardColor,
+                    cardChild: CardChild(FontAwesomeIcons.mars, 'Male'),
+                    onPress: () {
+                      setState(() {
+                        //gender = GenderType.male
+                        maleActive = true;
+                        femaleActive = false;
+                      });
+                    },
                   ),
                 ),
                 Expanded(
-                  child: GestureDetector(
-                    onTap: () {setState(() {
-                      //gender = GenderType.female;
-                      maleActive = false;
-                      femaleActive = true;
-                    });},
-                    child: CardModel(
-                      //gender == GenderType.female ? activeCardColor : inactiveCardColor,
-                      femaleActive ? activeCardColor : inactiveCardColor,
-                      CardChild(FontAwesomeIcons.venus, 'Female'),
-                    ),
+                  child: CardModel(
+                    //gender == GenderType.female ? activeCardColor : inactiveCardColor,
+                    colorin:
+                        femaleActive ? kActiveCardColor : kInactiveCardColor,
+                    cardChild: CardChild(FontAwesomeIcons.venus, 'Female'),
+                    onPress: () {
+                      setState(() {
+                        //gender = GenderType.female
+                        maleActive = false;
+                        femaleActive = true;
+                      });
+                    },
                   ),
                 ),
               ],
             ),
           ),
           Expanded(
-            child: Row(
-              children: <Widget>[
-                Expanded(
-                  child: CardModel(inactiveCardColor,CardChild(FontAwesomeIcons.venus, ''),),
-                ),
-              ],
+            child: CardModel(
+              cardChild: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    'Height',
+                    style: kBottomTextStyle,
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.baseline,
+                    textBaseline: TextBaseline.alphabetic,
+                    children: [
+                      Text(
+                        height.toString(),
+                        style: kNumber,
+                      ),
+                      Text(
+                        'cm',
+                        style: kBottomTextStyle,
+                      ),
+                    ],
+                  ),
+                  Slider(
+                    value: height.toDouble(),
+                    min: 100.0,
+                    max: 250.0,
+                    activeColor: kSliderActive,
+                    inactiveColor: kSliderInactive,
+                    onChanged: (double newValue) {
+                      setState(() {
+                        height = newValue.round();
+                      });
+                    },
+                  ),
+                ],
+              ),
             ),
           ),
           Expanded(
             child: Row(
               children: <Widget>[
                 Expanded(
-                  child: CardModel(inactiveCardColor,CardChild(FontAwesomeIcons.mars, ''),),
+                  child: CardModel(),
                 ),
                 Expanded(
-                  child: CardModel(inactiveCardColor,CardChild(FontAwesomeIcons.venus, ''),),
+                  child: CardModel(),
                 ),
               ],
             ),
           ),
           Container(
-            color: bottomContainerColor,
+            color: kBottomContainerColor,
             margin: EdgeInsets.only(top: 10.0),
             width: double.infinity,
-            height: bottomContainerHeigth,
+            height: kBottomContainerHeigth,
           )
         ],
       ),

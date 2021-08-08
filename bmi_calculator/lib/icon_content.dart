@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
+import 'constants.dart';
 
-const bottomTextStyle = TextStyle(
-  fontSize: 18.0,
-  color: Color(0xFF8D8E98),
-);
 
 class CardChild extends StatelessWidget {
   CardChild(this.icon, this.bottomText);
@@ -26,7 +23,7 @@ class CardChild extends StatelessWidget {
         ),
         Text(
           bottomText,
-          style: bottomTextStyle,
+          style: kBottomTextStyle,
         ),
       ],
     );
