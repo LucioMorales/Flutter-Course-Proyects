@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "498797930539",
+    "project_id": "flash-chat-20af8",
+    "storage_bucket": "flash-chat-20af8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:498797930539:android:1aca14cb14faa82aba626e",
+        "android_client_info": {
+          "package_name": "com.LucioMorales.flash_chat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "498797930539-ptkau9oci6v17odr7bq2luhjarpmgueu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC7-j6Gsw-kHV0FVj0bDq4V7sUJwKy05c4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "498797930539-ptkau9oci6v17odr7bq2luhjarpmgueu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
