@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flash_chat/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ChatScreen extends StatefulWidget {
   static String id = 'chat';
@@ -10,8 +11,10 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
+  final _firestore = FirebaseFirestore.instance;
   FirebaseAuth auth = FirebaseAuth.instance;
   User? loggedInUser;
+  String messageText = '';
 
   @override
   void initState() {
@@ -19,29 +22,47 @@ class _ChatScreenState extends State<ChatScreen> {
     getCurrentUser();
   }
 
-  void getCurrentUser() async{
+  void getCurrentUser() async {
     final user = await auth.currentUser;
-    try{
-      if (user != null){
+    try {
+      if (user != null) {
         loggedInUser = user;
         print(loggedInUser!.email);
       }
-    } catch (e){
+    } catch (e) {
       print(e);
     }
+  }
+
+  // void getMessages() async{
+  //   final messages = await _firestore.collection('messages').get();
+  //   for (var message in messages.docs){
+  //     print(message.data());
+  //   }
+  // }
+
+  void messageStream() async {
+    await for (var snapshot in _firestore.collection('messages').snapshots()) {
+      for (var message in snapshot.docs) {
+        print(message.data().cast());
+      }
+    }
+    ;
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         leading: null,
         actions: <Widget>[
           IconButton(
               icon: Icon(Icons.close),
-              onPressed: () async{
-                await FirebaseAuth.instance.signOut();
-                Navigator.pop(context);
+              onPressed: () async {
+                // await FirebaseAuth.instance.signOut();
+                // Navigator.pop(context);
+                messageStream();
               }),
         ],
         title: Text('⚡️Chat'),
@@ -52,6 +73,32 @@ class _ChatScreenState extends State<ChatScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
+            StreamBuilder<QuerySnapshot>(
+              stream: _firestore.collection('messages').snapshots(),
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) {
+                  return Center(
+                    child: CircularProgressIndicator(
+                      backgroundColor: Colors.white,
+                    ),
+                  );
+                } else {
+                  final messages = snapshot.data!.docs;
+                  List<Text> messageWidgets = [];
+                  for (var message in messages) {
+                    final messageText = message.get('text');
+                    final messageSender = message.get('sender');
+
+                    final messageWidget =
+                        Text('$messageText from $messageSender');
+                    messageWidgets.add(messageWidget);
+                  }
+                  return Column(
+                    children: messageWidgets,
+                  );
+                }
+              },
+            ),
             Container(
               decoration: kMessageContainerDecoration,
               child: Row(
@@ -60,14 +107,19 @@ class _ChatScreenState extends State<ChatScreen> {
                   Expanded(
                     child: TextField(
                       onChanged: (value) {
-                        //Do something with the user input.
+                        messageText = value;
                       },
                       decoration: kMessageTextFieldDecoration,
                     ),
                   ),
                   TextButton(
                     onPressed: () {
-                      //Implement send functionality.
+                      _firestore.collection('messages').add(
+                        {
+                          'text': messageText,
+                          'sender': loggedInUser!.email,
+                        },
+                      );
                     },
                     child: Text(
                       'Send',

@@ -63,6 +63,8 @@ variable ??(is not null) defaultVariable(use this if variable is null)
 return; ends the function where this keyword is written
 --------------------------------------------------------------------------------------------------------------------------
 static String id = 'welcome'; the static keyword allows to use the variable without needing to create an object. 
+--------------------------------------------------------------------------------------------------------------------------
 For example: 'WelcomeScreen.id' instead of 'WelcomeScreen().id'
 --------------------------------------------------------------------------------------------------------------------------
+Streams sends data to you as long as you are 'subscribed' and the moment there is new data.
 
