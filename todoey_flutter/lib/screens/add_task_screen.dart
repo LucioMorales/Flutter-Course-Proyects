@@ -3,8 +3,16 @@ import 'package:flutter/painting.dart';
 import 'package:todoey_flutter/constants.dart';
 
 class AddTaskScreen extends StatelessWidget {
+
+  final Function addTaskCallback;
+
+  AddTaskScreen(this.addTaskCallback);
+  
+
   @override
   Widget build(BuildContext context) {
+    String newTaskTitle = '';
+
     return Container(
       height: MediaQuery.of(context).size.height * 0.23,
       color: Color(0xFF757575),
@@ -33,6 +41,9 @@ class AddTaskScreen extends StatelessWidget {
               autofocus: true,
               textAlign: TextAlign.center,
               decoration: kTextFieldStyle,
+              onChanged: (newText){
+                newTaskTitle = newText;
+              },
             ),
             SizedBox(
               height: 10,
@@ -40,7 +51,9 @@ class AddTaskScreen extends StatelessWidget {
             Container(
               color: Colors.lightBlueAccent,
               child: TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  addTaskCallback(newTaskTitle);
+                } ,
                 child: Text(
                   'Add',
                   style: TextStyle(

@@ -67,4 +67,10 @@ static String id = 'welcome'; the static keyword allows to use the variable with
 For example: 'WelcomeScreen.id' instead of 'WelcomeScreen().id'
 --------------------------------------------------------------------------------------------------------------------------
 Streams sends data to you as long as you are 'subscribed' and the moment there is new data.
-
+--------------------------------------------------------------------------------------------------------------------------
+Context basically tells to the widget where the parent is
+--------------------------------------------------------------------------------------------------------------------------
+Model View Controller
+Model manages the data (Data and logic)
+View manages what goes on to the screen (UI)
+Controller intermediary (Mediator)
